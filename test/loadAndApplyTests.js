@@ -36,7 +36,7 @@ describe("node-config-cryptex", function () {
         });
 
         it("Replaces all secrets", async function () {
-            const result = await loadAndApply(null, {decrypt});
+            const result = await loadAndApply({decrypt});
             expect(config.util.toObject(result)).to.be.eql({
                 "foo": "bar",
                 "secret1": "secret1",

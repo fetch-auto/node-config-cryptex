@@ -4,8 +4,8 @@ const _ = require("lodash");
 const Cryptex = require("cryptex");
 const Promise = require("bluebird");
 
-const decryptSecrets = async (cryptexConfig, secretsToDecrypt, cryptexInstance) => {
-    const cryptex = cryptexInstance ? cryptexInstance : new Cryptex.Cryptex({config: cryptexConfig});
+const decryptSecrets = async (secretsToDecrypt, cryptexInstance) => {
+    const cryptex = cryptexInstance ? cryptexInstance : Cryptex;
 
     return await Promise.map(secretsToDecrypt, async secret => {
         const decryptedVal = await cryptex.decrypt(secret.encryptedVal);
@@ -14,7 +14,7 @@ const decryptSecrets = async (cryptexConfig, secretsToDecrypt, cryptexInstance) 
     });
 };
 
-const findSecrets = async () => {
+const findSecrets = () => {
     const originalConfig = config.util.toObject(config);
 
     const parametersToReplace = [];
@@ -26,9 +26,9 @@ const findSecrets = async () => {
     return parametersToReplace;
 };
 
-const loadSecrets = async (cryptexConfig, cryptexInstance) =>{
-    const secretsToDecrypt = await findSecrets();
-    return decryptSecrets(cryptexConfig, secretsToDecrypt, cryptexInstance);
+const loadSecrets = async (cryptexInstance) =>{
+    const secretsToDecrypt = findSecrets();
+    return decryptSecrets(secretsToDecrypt, cryptexInstance);
 };
 
 const applySecrets = (secrets) => {
@@ -42,9 +42,9 @@ const applySecrets = (secrets) => {
 };
 
 //Cryptex instance can be injected for testing purposes
-const _loadAndApply = async (cryptexConfig, cryptexInstance) => {
+const _loadAndApply = async (cryptexInstance) => {
     try {
-        const secretsToApply = await loadSecrets(cryptexConfig, cryptexInstance);
+        const secretsToApply = await loadSecrets(cryptexInstance);
         return applySecrets(secretsToApply);
     } catch (err) {
         console.error("Error loading secrets", err);
