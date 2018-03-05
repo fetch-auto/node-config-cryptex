@@ -3,11 +3,36 @@
   "version": "0.1.0",
   "main": "index.js",
   "author": "Graham Coombe <graham@fetchauto.ca>",
-  "license": "MIT",
+  "license": "ISC",
   "scripts": {
     "test": "SUPPRESS_NO_CONFIG_WARNING=true ./node_modules/mocha/bin/mocha",
     "eslint": "./node_modules/.bin/eslint '**/*.js' --fix"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fetch-auto/node-config-cryptex.git"
+  },
+  "issues": {
+    "url": "https://github.com/fetch-auto/node-config-cryptex/issues"
+  },
+  "homepage": "https://github.com/fetch-auto/node-config-cryptex#readme",
+  "engines": {
+    "node": ">=8.2.0"
+  },
+  "keywords": [
+    "crypto",
+    "key",
+    "keys",
+    "secret",
+    "secrets",
+    "passwords",
+    "encrypt",
+    "decrypt",
+    "encryption",
+    "decryption",
+    "config",
+    "configuration"
+  ],
   "dependencies": {
     "bluebird": "~3.5.1",
     "config": "~1.30.0",

@@ -66,6 +66,8 @@ await config.loadSecrets();
 require("./app.js");
 ```
 
-## How it works
+## Dependencies
+
+We use async/await so node 8 and up is required.
 
 
