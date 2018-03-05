@@ -1,0 +1,27 @@
+{
+  "name": "node-config-cryptex",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Graham Coombe <graham@fetchauto.ca>",
+  "license": "MIT",
+  "scripts": {
+    "test": "SUPPRESS_NO_CONFIG_WARNING=true ./node_modules/mocha/bin/mocha",
+    "eslint": "./node_modules/.bin/eslint '**/*.js' --fix"
+  },
+  "dependencies": {
+    "bluebird": "~3.5.1",
+    "config": "~1.30.0",
+    "cryptex": "^1.0.0",
+    "lodash": "~4.17.5",
+    "traverse": "~0.6.6"
+  },
+  "devDependencies": {
+    "chai": "~4.1.2",
+    "eslint": "~4.18.2",
+    "eslint-plugin-dependencies": "~2.4.0",
+    "import-fresh": "~2.0.0",
+    "mocha": "~5.0.1",
+    "mock-require": "~3.0.1",
+    "sinon": "~4.4.2"
+  }
+}

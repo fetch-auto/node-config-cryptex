@@ -1,0 +1,8 @@
+{
+	"foo": "bar",
+	"secret1": "CRYPT:123",
+	"db": {
+		"host": "localhost:5432",
+		"password": "CRYPT:456"
+	}
+}
