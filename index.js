@@ -53,8 +53,8 @@ const _loadAndApply = async (cryptexInstance) => {
 };
 
 
-const loadAndApply = async (cryptexConfig) => {
-    return _loadAndApply(cryptexConfig);
+const loadAndApply = async () => {
+    return _loadAndApply();
 };
 
 
