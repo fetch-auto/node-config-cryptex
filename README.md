@@ -31,16 +31,18 @@ npm install -g node-config-cryptex
     ```
 4. Create a cryptex config as documented [here](https://github.com/TomFrost/Cryptex/blob/master/README.md#5-save-your-secrets). The name of your deployment environments ex: `dev, prd` should match the deployment environments used in your node-config configuration files.  *NOTE: don't put your secrets in the secrets section of the cryptext config. We'll put these inline with the rest of your config*
 5. Encrypt a secret -
-    If you installed node-config-cryptex globally, you'll have a CLI tool that can encrypt and decrypt your keys according to your `cryptex.json`. If you want to get a value for a specific environment use the `-e` option. Otherwise you'll get a value for every environment specified in your cryptex.json
+    If you installed node-config-cryptex globally, you'll have a CLI tool that can encrypt and decrypt your keys according to your `cryptex.json`. If you want to get a value for a specific environment use the `-e` option. Otherwise you'll get a value for every environment specified in your cryptex.json.
+
+    The encrypted values will have the prefix `CRYPT:`. You'll want to copy and paste the whole thing including the prefix into your config.
 
     ```
     $ ncc encrypt -e prd mypassword
-    Q+JfrQS5DtSjqWHu1oO4HqctA2hVw4VhaDQfBCuvO8U=
+    CRYPT:Q+JfrQS5DtSjqWHu1oO4HqctA2hVw4VhaDQfBCuvO8U=
     ```
 
     Run `ncc --help` for more information.
 
-6. Add the encrypted value into your config file with the prefix `CRYPT:` ex:
+6. Add the encrypted value into your config file ex:
     ```yml
     db:
         user: db_user
@@ -69,7 +71,19 @@ await config.loadSecrets();
 require("./app.js");
 ```
 
-## CLI
+## CLI usage
+
+### ncc encrypt [parameters]
+
+Get an encrypted value to store your configuration files.
+
+#### Parameters
+
+`-e / --environment`: Specify an environment in your cryptex.json to use for encryption. If not specified we'll return a value for every env in your cryptex.json
+
+`-v / --value`: Specify a plaintext value to encrypt. Either this OR `-p` must be specified
+
+`-p / --path`: A path in your configuration to the value to encrypt. We'll use `node-config` in the specified environment to load your configuration tree and then retrieve the value at the given path. This value is then encrypted.
 
 
 

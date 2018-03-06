@@ -10,11 +10,30 @@ const log = console.log;
 
 const argv = require("yargs")
     .usage("Usage: $0 [options] <command>")
-    .command("encrypt <plaintext>", "Encrypt secret in 1 or more environments")
+    .command("encrypt", "Encrypt secret in 1 or more environments")
     .option("e", {
         alias: "environment",
         describe: "Encrypt for a specific env. If not specified an encrypted value will be returned for all envs in your cryptex.json",
         nargs: 1
+    })
+    .option("v", {
+        alias: "value",
+        describe: "Specify a plaintext value to encrypt. Ex: `myPassword`. Either this OR `-p` must be set.",
+        nargs: 1
+    })
+    .option("p", {
+        alias: "path",
+        describe: "Specify a path to a value in your configuration. We use node-config to load the config in the specified env and then read and encrypt the value. Ex: `db.password`. Either this OR `-v` must be set.",
+        nargs: 1
+    })
+    .check(argv => {
+        if (!argv.path && !argv.value) {
+            throw new Error("Must specify a value or a path to a value in your config to encrypt");
+        }
+        else if (argv.path && argv.value) {
+            throw new Error("Must specify a value or a path to a value in your config to encrypt. You cannot specify both");
+        }
+        return true;
     })
     .version(pkg.version)
     .help("help")
@@ -44,8 +63,19 @@ const getEnvironments = argv => {
     }
 };
 
+const getValue = (argv, env) => {
+    if (argv.value) {
+        return argv.value;
+    }
+    delete require.cache[require.resolve('config')];
+    process.env.NODE_CONFIG_ENV = env;
+    //We must wait to require config until after we set the NODE_CONFIG_ENV
+    const config = require("config");
+    return config.get(argv.path);
+};
+
 const encryptRunner = async argv => {
-    return Promise.map(getEnvironments(argv), async env => await encryptForEnv(argv.plaintext, env));
+    return Promise.map(getEnvironments(argv), async env => await encryptForEnv(getValue(argv, env),  env));
 };
 
 const encryptForEnv = async (plaintext, env) => {
@@ -53,7 +83,7 @@ const encryptForEnv = async (plaintext, env) => {
     const res = await encryptSecrets([{decryptedVal: plaintext}], cryptexInstance);
 
     log("Encrypted " + plaintext + " in env " + chalk.blue(env));
-    log(chalk.green(res[0].encryptedVal));
+    log(chalk.green("CRYPT:" + res[0].encryptedVal));
 };
 
 run(encryptRunner)(argv);
