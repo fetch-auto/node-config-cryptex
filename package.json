@@ -1,8 +1,10 @@
 {
   "name": "node-config-cryptex",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "./src/index.js",
-  "bin": {"ncc": "./src/cli.js"},
+  "bin": {
+    "ncc": "./src/cli.js"
+  },
   "author": "Graham Coombe <graham@fetchauto.ca>",
   "license": "ISC",
   "scripts": {
