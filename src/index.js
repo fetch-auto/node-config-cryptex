@@ -1,17 +1,11 @@
 const config = require("config");
 const traverse = require("traverse");
 const _ = require("lodash");
-const Cryptex = require("cryptex");
-const Promise = require("bluebird");
+const {decryptSecrets} = require("./cryptex");
 
-const decryptSecrets = async (secretsToDecrypt, cryptexInstance) => {
-    const cryptex = cryptexInstance ? cryptexInstance : Cryptex;
-
-    return await Promise.map(secretsToDecrypt, async secret => {
-        const decryptedVal = await cryptex.decrypt(secret.encryptedVal);
-        secret.decryptedVal = decryptedVal;
-        return secret;
-    });
+const loadSecrets = async (cryptexInstance) =>{
+    const secretsToDecrypt = findSecrets();
+    return decryptSecrets(secretsToDecrypt, cryptexInstance);
 };
 
 const findSecrets = () => {
@@ -24,11 +18,6 @@ const findSecrets = () => {
         }
     });
     return parametersToReplace;
-};
-
-const loadSecrets = async (cryptexInstance) =>{
-    const secretsToDecrypt = findSecrets();
-    return decryptSecrets(secretsToDecrypt, cryptexInstance);
 };
 
 const applySecrets = (secrets) => {

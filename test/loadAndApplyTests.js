@@ -8,14 +8,7 @@ const expect = require("chai").expect;
 
 describe("node-config-cryptex", function () {
     describe("loadAndApply", function () {
-        process.env.NODE_CONFIG = JSON.stringify({
-            "foo": "bar",
-            "secret1": "CRYPT:123",
-            "db": {
-                "host": "localhost:5432",
-                "password": "CRYPT:456"
-            }
-        });
+        process.env.NODE_CONFIG = JSON.stringify(require("./util/testconfig.json"));
 
         let loadAndApply,
             decrypt;
@@ -32,7 +25,7 @@ describe("node-config-cryptex", function () {
             const testConfig = importFresh("config");
             mockRequire("config", testConfig);
 
-            loadAndApply = importFresh("../index")._loadAndApply;
+            loadAndApply = importFresh("../src/index")._loadAndApply;
         });
 
         it("Replaces all secrets", async function () {

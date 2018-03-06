@@ -1,7 +1,8 @@
 {
   "name": "node-config-cryptex",
   "version": "0.2.0",
-  "main": "index.js",
+  "main": "./src/index.js",
+  "bin": {"ncc": "./src/cli.js"},
   "author": "Graham Coombe <graham@fetchauto.ca>",
   "license": "ISC",
   "scripts": {
@@ -17,7 +18,7 @@
   },
   "homepage": "https://github.com/fetch-auto/node-config-cryptex#readme",
   "engines": {
-    "node": ">=8.2.0"
+    "node": ">=8.0.0"
   },
   "keywords": [
     "crypto",
@@ -35,10 +36,12 @@
   ],
   "dependencies": {
     "bluebird": "~3.5.1",
+    "chalk": "~2.3.2",
     "config": "~1.30.0",
     "cryptex": "^1.0.0",
     "lodash": "~4.17.5",
-    "traverse": "~0.6.6"
+    "traverse": "~0.6.6",
+    "yargs": "~11.0.0"
   },
   "devDependencies": {
     "chai": "~4.1.2",

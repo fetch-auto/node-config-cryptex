@@ -14,7 +14,7 @@ This library wraps the cryptex module for all management of KMS data keys as wel
 
 ```
 npm install --save node-config-cryptex
-npm install -g cryptex
+npm install -g node-config-cryptex
 ```
 
 ## Configuration
@@ -29,14 +29,17 @@ npm install -g cryptex
       --output text \
       --query CiphertextBlob
     ```
-4. Create a cryptex config as documented [here](https://github.com/TomFrost/Cryptex/blob/master/README.md#5-save-your-secrets). *NOTE: don't put your secrets in the secrets section of the cryptext config. We'll put these inline with the rest of your config*
+4. Create a cryptex config as documented [here](https://github.com/TomFrost/Cryptex/blob/master/README.md#5-save-your-secrets). The name of your deployment environments ex: `dev, prd` should match the deployment environments used in your node-config configuration files.  *NOTE: don't put your secrets in the secrets section of the cryptext config. We'll put these inline with the rest of your config*
 5. Encrypt a secret -
-    If you installed Cryptex globally, you'll have a CLI tool called `cryptex` that can encrypt and decrypt your keys according to your `cryptex.json`.
+    If you installed node-config-cryptex globally, you'll have a CLI tool that can encrypt and decrypt your keys according to your `cryptex.json`. If you want to get a value for a specific environment use the `-e` option. Otherwise you'll get a value for every environment specified in your cryptex.json
 
     ```
-    $ cryptex encrypt mypassword
+    $ ncc encrypt -e prd mypassword
     Q+JfrQS5DtSjqWHu1oO4HqctA2hVw4VhaDQfBCuvO8U=
     ```
+
+    Run `ncc --help` for more information.
+
 6. Add the encrypted value into your config file with the prefix `CRYPT:` ex:
     ```yml
     db:
@@ -65,6 +68,10 @@ const config = require("node-config-cryptex");
 await config.loadSecrets();
 require("./app.js");
 ```
+
+## CLI
+
+
 
 ## Dependencies
 
