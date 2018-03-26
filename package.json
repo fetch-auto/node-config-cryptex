@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/fetch-auto/node-config-cryptex#readme",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "keywords": [
     "crypto",
