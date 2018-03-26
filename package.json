@@ -1,15 +1,17 @@
 {
   "name": "node-config-cryptex",
   "version": "0.4.0",
-  "main": "./src/index.js",
+  "main": "./build/index.js",
   "bin": {
-    "ncc": "./src/cli.js"
+    "ncc": "./build/cli.js"
   },
   "author": "Graham Coombe <graham@fetchauto.ca>",
   "license": "ISC",
   "scripts": {
     "test": "SUPPRESS_NO_CONFIG_WARNING=true ./node_modules/mocha/bin/mocha",
-    "eslint": "./node_modules/.bin/eslint '**/*.js' --fix"
+    "eslint": "./node_modules/.bin/eslint '**/*.js' --fix",
+    "build": "./node_modules/.bin/babel -d build/ src/",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -20,7 +22,7 @@
   },
   "homepage": "https://github.com/fetch-auto/node-config-cryptex#readme",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=4.0.0"
   },
   "keywords": [
     "crypto",
@@ -48,6 +50,11 @@
     "config": "^1.0.0"
   },
   "devDependencies": {
+    "babel-cli": "~6.26.0",
+    "babel-plugin-syntax-async-functions": "~6.13.0",
+    "babel-plugin-transform-async-to-generator": "~6.24.1",
+    "babel-polyfill": "~6.26.0",
+    "babel-preset-env": "~1.6.1",
     "chai": "~4.1.2",
     "config": "~1.30.0",
     "eslint": "~4.18.2",
