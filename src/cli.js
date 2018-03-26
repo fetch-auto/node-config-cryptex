@@ -67,7 +67,7 @@ const getValue = (argv, env) => {
     if (argv.value) {
         return argv.value;
     }
-    delete require.cache[require.resolve('config')];
+    delete require.cache[require.resolve("config")];
     process.env.NODE_CONFIG_ENV = env;
     //We must wait to require config until after we set the NODE_CONFIG_ENV
     const config = require("config");
