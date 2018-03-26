@@ -109,6 +109,6 @@ Get an encrypted value to store in your configuration files.
 
 ## Dependencies
 
-We use async/await so node 8 and up is required.
+Node 6 and up is supported
 
 
