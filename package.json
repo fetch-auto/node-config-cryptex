@@ -8,7 +8,7 @@
   "author": "Graham Coombe <graham@fetchauto.ca>",
   "license": "ISC",
   "scripts": {
-    "test": "SUPPRESS_NO_CONFIG_WARNING=true ./node_modules/mocha/bin/mocha",
+    "test": "SUPPRESS_NO_CONFIG_WARNING=true ./node_modules/mocha/bin/mocha --require babel-core/register",
     "eslint": "./node_modules/.bin/eslint '**/*.js' --fix",
     "build": "./node_modules/.bin/babel -d build/ src/",
     "prepublish": "npm run build"
@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "babel-cli": "~6.26.0",
+    "babel-core": "~6.26.0",
     "babel-plugin-syntax-async-functions": "~6.13.0",
     "babel-plugin-transform-async-to-generator": "~6.24.1",
     "babel-preset-env": "~1.6.1",
