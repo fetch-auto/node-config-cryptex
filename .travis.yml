@@ -3,7 +3,7 @@ node_js:
   - "6"
   - "8"
   - "9"
-scripts:
+script:
   - npm run eslint
   - npm test
   - npm build
