@@ -1,6 +1,6 @@
 {
   "name": "node-config-cryptex",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "main": "./build/index.js",
   "bin": {
     "ncc": "./build/cli.js"
