@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const pkg = require("../package.json");
-const {encryptSecrets} = require("./cryptex");
+const {encryptSecrets, decryptSecrets} = require("./cryptex");
 const cryptex = require("cryptex");
 const Promise = require("bluebird");
 const path = require("path");
@@ -11,19 +11,20 @@ const log = console.log;
 const argv = require("yargs")
     .usage("Usage: $0 [options] <command>")
     .command("encrypt", "Encrypt secret in 1 or more environments")
+    .command("decrypt", "Decrypt secret in 1 or more environments")
     .option("e", {
         alias: "environment",
-        describe: "Encrypt for a specific env. If not specified an encrypted value will be returned for all envs in your cryptex.json",
+        describe: "Specify environment as defined in you node_config configuration. If not specified a value will be returned for all envs in your cryptex.json",
         nargs: 1
     })
     .option("v", {
         alias: "value",
-        describe: "Specify a plaintext value to encrypt. Ex: `myPassword`. Either this OR `-p` must be set.",
+        describe: "Specify a plaintext value to encrypt or decrypt. Either this OR `-p` must be set.",
         nargs: 1
     })
     .option("p", {
         alias: "path",
-        describe: "Specify a path to a value in your configuration. We use node-config to load the config in the specified env and then read and encrypt the value. Ex: `db.password`. Either this OR `-v` must be set.",
+        describe: "Specify a path to a value in your configuration. We use node-config to load the config in the specified env and then read and encrypt/decrypt the value. Ex: `db.password`. Either this OR `-v` must be set.",
         nargs: 1
     })
     .check(argv => {
@@ -78,6 +79,10 @@ const encryptRunner = async argv => {
     return Promise.map(getEnvironments(argv), async env => await encryptForEnv(getValue(argv, env),  env));
 };
 
+const decryptRunner = async argv => {
+    return Promise.map(getEnvironments(argv), async env => await decryptForEnv(getValue(argv, env),  env));
+};
+
 const encryptForEnv = async (plaintext, env) => {
     const cryptexInstance = new cryptex.Cryptex({env});
     const res = await encryptSecrets([{decryptedVal: plaintext}], cryptexInstance);
@@ -86,6 +91,20 @@ const encryptForEnv = async (plaintext, env) => {
     log(chalk.green("CRYPT:" + res[0].encryptedVal));
 };
 
-run(encryptRunner)(argv);
+const decryptForEnv = async (cipherText, env) => {
+    const cryptexInstance = new cryptex.Cryptex({env});
+    const res = await decryptSecrets([{encryptedVal: cipherText.replace("CRYPT:", "")}], cryptexInstance);
 
+    log("Decrypted " + cipherText + " in env " + chalk.blue(env));
+    log(chalk.green(res[0].decryptedVal));
+};
+
+if (argv._[0] === "encrypt") {
+    run(encryptRunner)(argv);
+} else if (argv._[0] === "decrypt") {
+    run(decryptRunner)(argv)
+} else {
+    console.error("Unknown command" + argv._[0]);
+    process.exit(1);
+}
 
