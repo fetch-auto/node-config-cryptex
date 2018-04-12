@@ -16,7 +16,6 @@ This library wraps the cryptex module for all management of KMS data keys as wel
 
 ```
 npm install --save node-config-cryptex
-npm install -g node-config-cryptex
 ```
 
 ## Configuration
@@ -95,7 +94,9 @@ require("./app.js");
 
 ## CLI usage
 
-### ncc encrypt [parameters]
+Since config is a peer dependency (we do this so ncc is using the same version as your app) **Do not run this globally**. It won't work since there won't be a node-config for it to use. Instead run it from your node modules ie. `./node_modules/.bin/ncc`
+
+### ./node_modules/.bin/ncc encrypt [parameters]
 
 Get an encrypted value to store in your configuration files.
 
