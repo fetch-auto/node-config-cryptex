@@ -108,7 +108,17 @@ Get an encrypted value to store in your configuration files.
 
 `-p / --path`: A path in your configuration to the value to encrypt. We'll use `node-config` in the specified environment to load your configuration tree and then retrieve the value at the given path. This value is then encrypted.
 
+### ./node_modules/.bin/ncc decrypt [parameters]
 
+Get the plaintext value of an encrypted secret.
+
+#### Parameters
+
+`-e / --environment`: Specify an environment in your cryptex.json to use for decryption. If not specified we'll return a value for every env in your cryptex.json
+
+`-v / --value`: Specify an encrypted value to decrypt. Either this OR `-p` must be specified
+
+`-p / --path`: A path in your configuration to the value to decrypt. We'll use `node-config` in the specified environment to load your configuration tree and then retrieve the value at the given path. This value is then decrypted.
 
 ## Dependencies
 
