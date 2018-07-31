@@ -1,8 +1,8 @@
 # Node-config-cryptex
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/fetch-auto/node-config-cryptex.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/gcoombe/node-config-cryptex.svg)](https://greenkeeper.io/)
 
-[![Build Status](https://travis-ci.org/fetch-auto/node-config-cryptex.svg?branch=master)](https://travis-ci.org/fetch-auto/node-config-cryptex)
+[![Build Status](https://travis-ci.org/gcoombe/node-config-cryptex.svg?branch=master)](https://travis-ci.org/fetch-auto/node-config-cryptex)
 
 Use AWS KMS to securely encrypt your secrets and inject the decrypted values into your [node-config](https://github.com/lorenwest/node-config) configuration at run time.
 
